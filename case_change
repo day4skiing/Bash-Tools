@@ -1,12 +1,49 @@
 #!/bin/bash
 
-#usage case_change -c [upper|lower]
+#usage case_change -c <upper|lower>  -d <directory>
 
+usage() { echo "Usage: $0 -c [upper|lower] [-d <directory>]" 1>&2; exit 1; }
 
+# default dir to CWD
 dir="."
-while getopts ":c" opt; do 
-  for name in `ls $dir`; 
-  do
-	echo $name
-  done
+
+while getopts ":c:d:" opt; do
+  case $opt in
+    c) caseMode=$OPTARG
+       ;;
+    d) dir=$OPTARG
+       ;;
+    *) usage;
+  esac
+done
+  
+if [ -z $caseMode ]
+then
+      echo "error Case not set"
+      usage
+fi
+
+for name in `/usr/bin/ls $dir`; 
+do
+      if [ "$caseMode" == "upper" ]
+      then
+        new=${name^^}
+      fi
+
+      if [ "$caseMode" == "lower" ]
+      then
+        new=${name,,}
+      fi
+
+      if [ -z $new ]
+      then
+      	echo "error -c not set to [lower|upper]"
+      	usage
+      fi
+
+      if [ -e "$dir/$name" ]
+      then 
+         echo "running command: mv $dir/$name $dir/$new"
+         mv $dir/$name $dir/$new
+      fi
 done
