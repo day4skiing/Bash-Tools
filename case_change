@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#usage case_change -c [upper|lower]
+
+
+dir="."
+while getopts ":c" opt; do 
+  for name in `ls $dir`; 
+  do
+	echo $name
+  done
+done
