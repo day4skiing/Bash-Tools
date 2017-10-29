@@ -1,8 +1,6 @@
 function fixssh() {
- # This function delete a line from a file that SSH complains about
- # Example:   fixssh /home/test/.ssh/known_hosts:4
   a=$1
-  l=${a#*:}
-  f=${a%:*}
-  sed -i "${l}d" $f
+  line=${a#*:}
+  file=${a%:*}
+  sed -i "${line}d" $file
 }
