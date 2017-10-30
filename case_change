@@ -23,7 +23,7 @@ then
       usage
 fi
 
-for name in `/usr/bin/ls $dir`; 
+for name in `/bin/ls $dir`; 
 do
       if [ "$caseMode" == "upper" ]
       then
